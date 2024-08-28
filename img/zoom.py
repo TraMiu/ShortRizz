@@ -13,7 +13,6 @@ class ImageCropper(tk.Tk):
         self.default_width = 648
         self.default_height = 1152
 
-
         # Variables to store the coordinates
         self.start_x = None
         self.start_y = None
@@ -27,11 +26,13 @@ class ImageCropper(tk.Tk):
         button_frame = tk.Frame(self)
         button_frame.pack(side=tk.TOP, fill=tk.X)
 
-        tk.Button(button_frame, text="Load Folder", command=self.load_folder).pack(side=tk.LEFT)
-        tk.Button(button_frame, text="Next Image", command=self.load_next_image).pack(side=tk.LEFT)
+        tk.Button(button_frame, text="Clear", command=self.delete_cropped_images).pack(side=tk.RIGHT)
+        tk.Button(button_frame, text="Load Folder", command=self.load_folder).pack(side=tk.RIGHT)
+        tk.Button(button_frame, text="Next Image", command=self.load_next_image).pack(side=tk.RIGHT)
+    
 
-        # Move the button frame to the top left corner
-        button_frame.place(x=0, y=0)
+        # Move the button frame to the top right corner
+        button_frame.place(x=self.winfo_width() - button_frame.winfo_width(), y=0)
 
         # List of image files
         self.images = []
@@ -89,7 +90,15 @@ class ImageCropper(tk.Tk):
             bbox = [int(coord) for coord in bbox]
             cropped_img = self.image.crop(bbox)
             # cropped_img.show()  # Optionally display the cropped image
+            # self.delete_cropped_images()  # Delete existing cropped images
             self.save_cropped_image(cropped_img)
+
+    def delete_cropped_images(self):
+        save_folder = "cropped"
+        if os.path.exists(save_folder):
+            for file_name in os.listdir(save_folder):
+                file_path = os.path.join(save_folder, file_name)
+                os.remove(file_path)
 
     def save_cropped_image(self, cropped_img):
         base_path = os.path.dirname(self.images[self.current_image_index])
@@ -107,7 +116,7 @@ class ImageCropper(tk.Tk):
         else:
             messagebox.showinfo("End", "You have reached the end of the folder.")
 
+
 if __name__ == "__main__":
     app = ImageCropper()
     app.mainloop()
-

@@ -164,8 +164,7 @@ def load_dict():
                 scene = scene.replace(name, character)
                 scene = scene.replace("'s", "and his/her")
                 prompts[scripts[i]] = scene
-                if "and his/her" in scene:
-                    prompt_fixes[scripts[i]] = scene
+                prompt_fixes[scripts[i]] = scene
 
             current_key_index = 0
             show_current_prompt()

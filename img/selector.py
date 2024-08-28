@@ -19,6 +19,13 @@ selected_images = []
 checkboxes = []
 phrase_index = 0
 
+# code to clear all jpeg files in the selected folder
+for i in range(100):
+    try:
+        os.remove("selected/"+str(i)+".jpeg")
+    except:
+        pass
+
 def show_transcript(index):
     # Clear previous content
     for widget in frame.winfo_children():

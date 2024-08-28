@@ -7,7 +7,7 @@ def generate_image(prompt):
     command = f'python -m BingImageCreator --prompt "{prompt}" -U "{U_cookie_api_key_value}"'
     os.system(command)
 
-    return os.listdir("OUTPUT")
+    return os.listdir("output")
 
 with open('..\scenes.txt') as f:
     data = json.load(f)
@@ -15,6 +15,12 @@ print("Type of data: ", type(data))
 
 prompts = list(data.values())
 
+# Code to clear all jpeg files in the output folder
+for i in range(100):
+    try:
+        os.remove("output/"+str(i)+".jpeg")
+    except:
+        pass
 
 print (prompts)
 for i in range(len(prompts)):
